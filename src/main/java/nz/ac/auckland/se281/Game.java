@@ -1,20 +1,36 @@
 package nz.ac.auckland.se281;
 
+import static nz.ac.auckland.se281.MessageCli.INVALID_INPUT;
+import static nz.ac.auckland.se281.MessageCli.PRINT_INFO_HAND;
+
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
 /** This class represents the Game is the main entry point. */
 public class Game {
-  int gameCount = 0;
+  private int gameCount;
+  private String name = null;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
-    MessageCli.WELCOME_PLAYER.printMessage(options[0]);
+    gameCount = 0;
+    name = options[0];
+    MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
   public void play() {
+    if (name == null) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    }
+    
     gameCount++;
     MessageCli.START_ROUND.printMessage(String.valueOf(gameCount));
+    MessageCli.ASK_INPUT.printMessage();
+    String input = Utils.scanner.nextLine();
+    int fingers = Integer.parseInt(input);
+    MessageCli.PRINT_INFO_HAND.printMessage(name, input);
+    
   }
 
   public void endGame() {}
