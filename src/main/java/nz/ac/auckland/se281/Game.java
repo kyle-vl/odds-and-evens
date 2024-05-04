@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import main.java.nz.ac.auckland.se281.DifficultyLevel;
+import main.java.nz.ac.auckland.se281.DifficultyLevelFactory;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -9,12 +11,14 @@ public class Game {
   private String name = null;
   private final String opponent = "HAL-9000";
   Choice userChoice;
+  Difficulty currentDifficulty;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
     gameCount = 0;
     name = options[0];
     userChoice = choice;
+    currentDifficulty = difficulty;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -35,7 +39,8 @@ public class Game {
       fingers = Integer.parseInt(input);
     }
 
-    int halFingers = Utils.getRandomNumberRange(0, 5);
+    DifficultyLevel difficultyLevel = DifficultyLevelFactory.createDifficultyLevel(currentDifficulty);
+    int halFingers = difficultyLevel.getNumber();
 
     MessageCli.PRINT_INFO_HAND.printMessage(name, input);
     MessageCli.PRINT_INFO_HAND.printMessage(opponent, String.valueOf(halFingers));
