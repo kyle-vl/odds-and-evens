@@ -1,8 +1,5 @@
 package nz.ac.auckland.se281;
 
-import static nz.ac.auckland.se281.MessageCli.INVALID_INPUT;
-import static nz.ac.auckland.se281.MessageCli.PRINT_INFO_HAND;
-
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -23,7 +20,7 @@ public class Game {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
-    
+
     gameCount++;
     MessageCli.START_ROUND.printMessage(String.valueOf(gameCount));
     MessageCli.ASK_INPUT.printMessage();
@@ -34,8 +31,11 @@ public class Game {
       input = Utils.scanner.nextLine();
       fingers = Integer.parseInt(input);
     }
+
+    int halFingers = Utils.getRandomNumberRange(0, 5);
+
     MessageCli.PRINT_INFO_HAND.printMessage(name, input);
-    
+    MessageCli.PRINT_INFO_HAND.printMessage("HAL-9000", String.valueOf(halFingers));
   }
 
   public void endGame() {}
