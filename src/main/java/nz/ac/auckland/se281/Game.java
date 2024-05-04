@@ -7,11 +7,14 @@ import nz.ac.auckland.se281.Main.Difficulty;
 public class Game {
   private int gameCount;
   private String name = null;
+  private final String opponent = "HAL-9000";
+  Choice userChoice;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
     gameCount = 0;
     name = options[0];
+    userChoice = choice;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -35,7 +38,19 @@ public class Game {
     int halFingers = Utils.getRandomNumberRange(0, 5);
 
     MessageCli.PRINT_INFO_HAND.printMessage(name, input);
-    MessageCli.PRINT_INFO_HAND.printMessage("HAL-9000", String.valueOf(halFingers));
+    MessageCli.PRINT_INFO_HAND.printMessage(opponent, String.valueOf(halFingers));
+
+    int sum = fingers + halFingers;
+    if ((userChoice == Choice.EVEN && Utils.isEven(sum)) || (userChoice == Choice.ODD && Utils.isOdd(sum))) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(userChoice), name);
+      return;
+    } else if (userChoice == Choice.EVEN) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), "ODD", opponent);
+      return;
+    } else {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), "EVEN", opponent);
+      return;
+    }
   }
 
   public void endGame() {}
