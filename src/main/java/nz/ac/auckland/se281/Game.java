@@ -58,16 +58,20 @@ public class Game {
     MessageCli.PRINT_INFO_HAND.printMessage(opponent, String.valueOf(halFingers));
 
     int sum = fingers + halFingers;
-    if ((userChoice == Choice.EVEN && Utils.isEven(sum)) || (userChoice == Choice.ODD && Utils.isOdd(sum))) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(userChoice), name);
-      return;
-    } else if (userChoice == Choice.EVEN) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), "ODD", opponent);
-      return;
+    Choice sumType;
+    if (Utils.isEven(sum)) {
+      sumType = Choice.EVEN;
     } else {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), "EVEN", opponent);
-      return;
+      sumType = Choice.ODD;
     }
+
+    if (userChoice == sumType) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(userChoice), name);
+    } else {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(opponentChoice), opponent);
+    }
+
+    return;
   }
 
   public void endGame() {}

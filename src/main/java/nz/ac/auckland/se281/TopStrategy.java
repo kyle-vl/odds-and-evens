@@ -27,17 +27,24 @@ public class TopStrategy implements Strategy {
       }
     }
 
-    if (((evenCount < oddCount) && (opponentChoice == Choice.EVEN))
-        || ((oddCount < evenCount) && (opponentChoice == Choice.ODD))) {
-      int number = Utils.getRandomOddNumber();
-      return number;
-    } else if (((evenCount < oddCount) && (opponentChoice == Choice.ODD))
-        || ((oddCount < evenCount) && (opponentChoice == Choice.EVEN))) {
-      int number = Utils.getRandomEvenNumber();
-      return number;
+    int number;
+    Choice userPreferredType;
+
+    if (oddCount < evenCount) {
+      userPreferredType = Choice.EVEN;
+    } else if (evenCount < oddCount) {
+      userPreferredType = Choice.ODD;
     } else {
-      int number = Utils.getRandomNumberRange(0, 5);
+      number = Utils.getRandomNumberRange(0, 5);
       return number;
     }
+
+    if (userPreferredType != opponentChoice) {
+      number = Utils.getRandomOddNumber();
+    } else {
+      number = Utils.getRandomEvenNumber();
+    }
+
+    return number;
   }
 }
