@@ -80,21 +80,28 @@ public class Game {
     if (userChoice == sumType) {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage(
           String.valueOf(sum), String.valueOf(userChoice), name);
-          playerWins++;
-          opponentLosses++;
-          opponentWinsPrevious = false;
+      playerWins++;
+      opponentLosses++;
+      opponentWinsPrevious = false;
     } else {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage(
           String.valueOf(sum), String.valueOf(opponentChoice), opponent);
-          opponentWins++;
-          playerLosses++;
-          opponentWinsPrevious = true;
+      opponentWins++;
+      playerLosses++;
+      opponentWinsPrevious = true;
     }
 
     return;
   }
 
   public void endGame() {
+    if (name == null) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    }
+
+    showStats();
+
     if (opponentWins < playerWins) {
       MessageCli.PRINT_END_GAME.printMessage(name);
     } else if (playerWins < opponentWins) {
@@ -102,6 +109,7 @@ public class Game {
     } else {
       MessageCli.PRINT_END_GAME_TIE.printMessage();
     }
+
     name = null;
   }
 
@@ -111,7 +119,9 @@ public class Game {
       return;
     }
 
-    MessageCli.PRINT_PLAYER_WINS.printMessage(name, String.valueOf(playerWins), String.valueOf(playerLosses));
-    MessageCli.PRINT_PLAYER_WINS.printMessage(opponent, String.valueOf(opponentWins), String.valueOf(opponentLosses));
+    MessageCli.PRINT_PLAYER_WINS.printMessage(
+        name, String.valueOf(playerWins), String.valueOf(playerLosses));
+    MessageCli.PRINT_PLAYER_WINS.printMessage(
+        opponent, String.valueOf(opponentWins), String.valueOf(opponentLosses));
   }
 }
