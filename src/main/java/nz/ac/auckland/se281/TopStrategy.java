@@ -4,6 +4,11 @@ import java.util.List;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Utils;
 
+/**
+ * Top strategy generates a number for the AI which is
+ * most likely to win, depending on the previous numbers
+ * played by the player.
+ */
 public class TopStrategy implements Strategy {
   private List<Integer> fingersHistory;
   private Choice opponentChoice;
@@ -32,7 +37,8 @@ public class TopStrategy implements Strategy {
     Choice userPreferredType;
 
     /* User preferred type is the type of number player has used the most.
-    If player has played evens and odds an equal number of times, AI will generate a random number. */
+    If player has played evens and odds an equal number of times, 
+    AI will generate a random number. */
     if (oddCount < evenCount) {
       userPreferredType = Choice.EVEN;
     } else if (evenCount < oddCount) {

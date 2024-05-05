@@ -22,6 +22,14 @@ public class Game {
   private Difficulty currentDifficulty;
   private boolean opponentWinsPrevious;
 
+  /**
+   * Creates a new game. The user must run this method in order to use any of the other methods
+   * under this class.
+   *
+   * @param difficulty difficulty level selected by the player
+   * @param choice number type (even or odd) selected by the player
+   * @param options the first element of options[0]; is the name of the player
+   */
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // Set all game values to 0
     gameCount = 0;
@@ -29,8 +37,6 @@ public class Game {
     opponentWins = 0;
     playerLosses = 0;
     opponentLosses = 0;
-
-    // the first element of options[0]; is the name of the player
     name = options[0];
     currentDifficulty = difficulty;
 
@@ -44,6 +50,7 @@ public class Game {
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
+  /** Starts a new round of the current game. */
   public void play() {
     // Return if game hasn't started
     if (name == null) {
@@ -101,6 +108,7 @@ public class Game {
     }
   }
 
+  /** Ends the current game, displays stats and declares the winner. */
   public void endGame() {
     // Return if game hasn't started
     if (name == null) {
@@ -119,11 +127,12 @@ public class Game {
       MessageCli.PRINT_END_GAME_TIE.printMessage();
     }
 
-    /* Set name to null so user cannot use play, showStats, 
+    /* Set name to null so user cannot use play, showStats,
     and endGame methods without starting a new game. */
     name = null;
   }
 
+  /** Displays the current wins and losses of each player. */
   public void showStats() {
     // Return if game hasn't started
     if (name == null) {
@@ -131,7 +140,6 @@ public class Game {
       return;
     }
 
-    // Print wins and losses of each player
     MessageCli.PRINT_PLAYER_WINS.printMessage(
         name, String.valueOf(playerWins), String.valueOf(playerLosses));
     MessageCli.PRINT_PLAYER_WINS.printMessage(

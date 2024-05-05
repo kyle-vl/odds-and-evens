@@ -6,6 +6,18 @@ import nz.ac.auckland.se281.Main.Difficulty;
 
 public class DifficultyLevelFactory {
 
+  /**
+   * Factory which creates easy, medium, and hard difficulty levels
+   * Takes in parameters required to generate numbers for higher
+   * difficulty levels.
+   * 
+   * @param difficulty difficulty level selected by the player
+   * @param gameCount number of rounds played in the current game
+   * @param fingersHistory all previous numbers selected by the player
+   * @param opponentChoice the number type (even or odd) of the AI
+   * @param opponentWins records whether the AI won or lost previous round
+   * @return creates a new instance of the corresponding difficulty
+   */
   public static DifficultyLevel createDifficultyLevel(
       Difficulty difficulty,
       int gameCount,
@@ -13,7 +25,6 @@ public class DifficultyLevelFactory {
       Choice opponentChoice,
       boolean opponentWins) {
 
-    // Factory creates a new instance of corresponding difficulty
     switch (difficulty) {
       case EASY:
         return new EasyDifficulty();
