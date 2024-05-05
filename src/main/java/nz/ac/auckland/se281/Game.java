@@ -95,6 +95,13 @@ public class Game {
   }
 
   public void endGame() {
+    if (opponentWins < playerWins) {
+      MessageCli.PRINT_END_GAME.printMessage(name);
+    } else if (playerWins < opponentWins) {
+      MessageCli.PRINT_END_GAME.printMessage(opponent);
+    } else {
+      MessageCli.PRINT_END_GAME_TIE.printMessage();
+    }
     name = null;
   }
 
