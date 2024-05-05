@@ -13,6 +13,7 @@ public class DifficultyLevelFactory {
       Choice opponentChoice,
       boolean opponentWins) {
 
+    // Factory creates a new instance of corresponding difficulty
     switch (difficulty) {
       case EASY:
         return new EasyDifficulty();

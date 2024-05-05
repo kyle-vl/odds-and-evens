@@ -6,6 +6,7 @@ import nz.ac.auckland.se281.Main.Choice;
 public class MediumDifficulty implements DifficultyLevel {
   private final Strategy strategy;
 
+  /* Medium difficulty uses random strategy for first 3 rounds, then switches to top strategy */
   public MediumDifficulty(int gameCount, List<Integer> fingersHistory, Choice opponentChoice) {
     if (gameCount <= 3) {
       this.strategy = new RandomStrategy();

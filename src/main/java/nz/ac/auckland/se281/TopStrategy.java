@@ -19,6 +19,7 @@ public class TopStrategy implements Strategy {
     int evenCount = 0;
     int oddCount = 0;
 
+    // Count amount of times user plays even and odd
     for (int fingers : fingersHistory) {
       if (Utils.isEven(fingers)) {
         evenCount++;
@@ -30,6 +31,8 @@ public class TopStrategy implements Strategy {
     int number;
     Choice userPreferredType;
 
+    /* User preferred type is the type of number player has used the most.
+    If player has played evens and odds an equal number of times, AI will generate a random number. */
     if (oddCount < evenCount) {
       userPreferredType = Choice.EVEN;
     } else if (evenCount < oddCount) {
@@ -39,6 +42,8 @@ public class TopStrategy implements Strategy {
       return number;
     }
 
+    /* AI plays number type most likely to get the win, assuming 
+    player will use their preferred number type. */
     if (userPreferredType != opponentChoice) {
       number = Utils.getRandomOddNumber();
     } else {

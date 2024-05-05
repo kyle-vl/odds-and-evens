@@ -9,10 +9,11 @@ public class HardDifficulty implements DifficultyLevel {
     RANDOM,
     TOP;
   }
-  
+
   private final Strategy strategy;
   private StrategyType strategyType;
 
+  /* Hard difficulty changes strategies if AI loses previous round, but uses random strategy for first three rounds */
   public HardDifficulty(
       int gameCount, List<Integer> fingersHistory, Choice opponentChoice, boolean opponentWins) {
     if ((gameCount <= 3)
