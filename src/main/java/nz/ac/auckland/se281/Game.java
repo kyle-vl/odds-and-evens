@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import main.java.nz.ac.auckland.se281.DifficultyLevel;
 import main.java.nz.ac.auckland.se281.DifficultyLevelFactory;
 import nz.ac.auckland.se281.Main.Choice;
@@ -16,6 +16,7 @@ public class Game {
   private Choice userChoice;
   private Choice opponentChoice;
   private Difficulty currentDifficulty;
+  private boolean opponentWins;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
@@ -50,7 +51,9 @@ public class Game {
       fingers = Integer.parseInt(input);
     }
 
-    DifficultyLevel difficultyLevel = DifficultyLevelFactory.createDifficultyLevel(currentDifficulty, gameCount, fingersHistory, opponentChoice);
+    DifficultyLevel difficultyLevel =
+        DifficultyLevelFactory.createDifficultyLevel(
+            currentDifficulty, gameCount, fingersHistory, opponentChoice, opponentWins);
     int halFingers = difficultyLevel.getNumber();
 
     fingersHistory.add(fingers);
@@ -66,9 +69,13 @@ public class Game {
     }
 
     if (userChoice == sumType) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(userChoice), name);
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(
+          String.valueOf(sum), String.valueOf(userChoice), name);
+          opponentWins = false;
     } else {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), String.valueOf(opponentChoice), opponent);
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(
+          String.valueOf(sum), String.valueOf(opponentChoice), opponent);
+          opponentWins = true;
     }
 
     return;
