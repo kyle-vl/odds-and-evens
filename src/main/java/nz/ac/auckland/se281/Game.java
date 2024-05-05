@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import java.util.List;
+import java.util.ArrayList;
 import main.java.nz.ac.auckland.se281.DifficultyLevel;
 import main.java.nz.ac.auckland.se281.DifficultyLevelFactory;
 import nz.ac.auckland.se281.Main.Choice;
@@ -10,14 +12,23 @@ public class Game {
   private int gameCount;
   private String name = null;
   private final String opponent = "HAL-9000";
-  Choice userChoice;
-  Difficulty currentDifficulty;
+  private List<Integer> fingersHistory = new ArrayList<>();
+  private Choice userChoice;
+  private Choice opponentChoice;
+  private Difficulty currentDifficulty;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
     gameCount = 0;
     name = options[0];
     userChoice = choice;
+
+    if (userChoice == Choice.EVEN) {
+      opponentChoice = Choice.ODD;
+    } else {
+      opponentChoice = Choice.EVEN;
+    }
+
     currentDifficulty = difficulty;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
@@ -39,9 +50,10 @@ public class Game {
       fingers = Integer.parseInt(input);
     }
 
-    DifficultyLevel difficultyLevel = DifficultyLevelFactory.createDifficultyLevel(currentDifficulty);
+    DifficultyLevel difficultyLevel = DifficultyLevelFactory.createDifficultyLevel(currentDifficulty, gameCount, fingersHistory, opponentChoice);
     int halFingers = difficultyLevel.getNumber();
 
+    fingersHistory.add(fingers);
     MessageCli.PRINT_INFO_HAND.printMessage(name, input);
     MessageCli.PRINT_INFO_HAND.printMessage(opponent, String.valueOf(halFingers));
 
