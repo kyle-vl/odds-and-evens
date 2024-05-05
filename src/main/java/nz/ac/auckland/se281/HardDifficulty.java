@@ -3,17 +3,17 @@ package main.java.nz.ac.auckland.se281;
 import java.util.List;
 import nz.ac.auckland.se281.Main.Choice;
 
-public class Hard implements DifficultyLevel {
-  private final Strategy strategy;
+public class HardDifficulty implements DifficultyLevel {
 
   public enum StrategyType {
     RANDOM,
     TOP;
   }
+  
+  private final Strategy strategy;
+  private StrategyType strategyType;
 
-  StrategyType strategyType;
-
-  public Hard(
+  public HardDifficulty(
       int gameCount, List<Integer> fingersHistory, Choice opponentChoice, boolean opponentWins) {
     if ((gameCount <= 3)
         || (opponentWins == false) && (strategyType == StrategyType.TOP)
@@ -22,6 +22,7 @@ public class Hard implements DifficultyLevel {
       strategyType = StrategyType.RANDOM;
     } else {
       this.strategy = new TopStrategy(fingersHistory, opponentChoice);
+      strategyType = StrategyType.TOP;
     }
   }
 

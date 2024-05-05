@@ -90,8 +90,6 @@ public class Game {
       playerLosses++;
       opponentWinsPrevious = true;
     }
-
-    return;
   }
 
   public void endGame() {

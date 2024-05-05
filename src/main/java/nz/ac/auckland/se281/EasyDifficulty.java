@@ -1,9 +1,9 @@
 package main.java.nz.ac.auckland.se281;
 
-public class Easy implements DifficultyLevel {
+public class EasyDifficulty implements DifficultyLevel {
   private final Strategy strategy;
 
-  public Easy() {
+  public EasyDifficulty() {
     this.strategy = new RandomStrategy();
   }
 
