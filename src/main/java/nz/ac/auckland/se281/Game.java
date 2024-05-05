@@ -10,17 +10,26 @@ import nz.ac.auckland.se281.Main.Difficulty;
 /** This class represents the Game is the main entry point. */
 public class Game {
   private int gameCount;
+  private int playerWins;
+  private int opponentWins;
+  private int playerLosses;
+  private int opponentLosses;
   private String name = null;
   private final String opponent = "HAL-9000";
   private List<Integer> fingersHistory = new ArrayList<>();
   private Choice userChoice;
   private Choice opponentChoice;
   private Difficulty currentDifficulty;
-  private boolean opponentWins;
+  private boolean opponentWinsPrevious;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     // the first element of options[0]; is the name of the player
     gameCount = 0;
+    playerWins = 0;
+    opponentWins = 0;
+    playerLosses = 0;
+    opponentLosses = 0;
+
     name = options[0];
     userChoice = choice;
 
@@ -53,7 +62,7 @@ public class Game {
 
     DifficultyLevel difficultyLevel =
         DifficultyLevelFactory.createDifficultyLevel(
-            currentDifficulty, gameCount, fingersHistory, opponentChoice, opponentWins);
+            currentDifficulty, gameCount, fingersHistory, opponentChoice, opponentWinsPrevious);
     int halFingers = difficultyLevel.getNumber();
 
     fingersHistory.add(fingers);
@@ -71,17 +80,31 @@ public class Game {
     if (userChoice == sumType) {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage(
           String.valueOf(sum), String.valueOf(userChoice), name);
-          opponentWins = false;
+          playerWins++;
+          opponentLosses++;
+          opponentWinsPrevious = false;
     } else {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage(
           String.valueOf(sum), String.valueOf(opponentChoice), opponent);
-          opponentWins = true;
+          opponentWins++;
+          playerLosses++;
+          opponentWinsPrevious = true;
     }
 
     return;
   }
 
-  public void endGame() {}
+  public void endGame() {
+    name = null;
+  }
 
-  public void showStats() {}
+  public void showStats() {
+    if (name == null) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    }
+
+    MessageCli.PRINT_PLAYER_WINS.printMessage(name, String.valueOf(playerWins), String.valueOf(playerLosses));
+    MessageCli.PRINT_PLAYER_WINS.printMessage(opponent, String.valueOf(opponentWins), String.valueOf(opponentLosses));
+  }
 }
