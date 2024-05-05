@@ -23,52 +23,61 @@ public class Game {
   private boolean opponentWinsPrevious;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
-    // the first element of options[0]; is the name of the player
+    // Set all game values to 0
     gameCount = 0;
     playerWins = 0;
     opponentWins = 0;
     playerLosses = 0;
     opponentLosses = 0;
 
+    // the first element of options[0]; is the name of the player
     name = options[0];
-    userChoice = choice;
+    currentDifficulty = difficulty;
 
+    userChoice = choice;
     if (userChoice == Choice.EVEN) {
       opponentChoice = Choice.ODD;
     } else {
       opponentChoice = Choice.EVEN;
     }
 
-    currentDifficulty = difficulty;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
   public void play() {
+    // Return if game hasn't started
     if (name == null) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
 
+    // Increment game count and display round number
     gameCount++;
     MessageCli.START_ROUND.printMessage(String.valueOf(gameCount));
+
+    // Get user input, loop until user gives valid input between 0 and 5 (inclusive)
     MessageCli.ASK_INPUT.printMessage();
     String input = Utils.scanner.nextLine();
     int fingers = Integer.parseInt(input);
+
     while ((fingers < 0) || (fingers > 5)) {
       MessageCli.INVALID_INPUT.printMessage();
       input = Utils.scanner.nextLine();
       fingers = Integer.parseInt(input);
     }
 
+    // Using the difficulty level to determine AI's fingers
     DifficultyLevel difficultyLevel =
         DifficultyLevelFactory.createDifficultyLevel(
             currentDifficulty, gameCount, fingersHistory, opponentChoice, opponentWinsPrevious);
     int halFingers = difficultyLevel.getNumber();
 
+    // Print AI and user inputs, add user input to history
     fingersHistory.add(fingers);
     MessageCli.PRINT_INFO_HAND.printMessage(name, input);
     MessageCli.PRINT_INFO_HAND.printMessage(opponent, String.valueOf(halFingers));
 
+    // Determine sum and print winner and add to wins and losses of each player
     int sum = fingers + halFingers;
     Choice sumType;
     if (Utils.isEven(sum)) {
@@ -93,6 +102,7 @@ public class Game {
   }
 
   public void endGame() {
+    // Return if game hasn't started
     if (name == null) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
@@ -100,6 +110,7 @@ public class Game {
 
     showStats();
 
+    // Print winner
     if (opponentWins < playerWins) {
       MessageCli.PRINT_END_GAME.printMessage(name);
     } else if (playerWins < opponentWins) {
@@ -108,15 +119,19 @@ public class Game {
       MessageCli.PRINT_END_GAME_TIE.printMessage();
     }
 
+    /* Set name to null so user cannot use play, showStats, 
+    and endGame methods without starting a new game. */
     name = null;
   }
 
   public void showStats() {
+    // Return if game hasn't started
     if (name == null) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
 
+    // Print wins and losses of each player
     MessageCli.PRINT_PLAYER_WINS.printMessage(
         name, String.valueOf(playerWins), String.valueOf(playerLosses));
     MessageCli.PRINT_PLAYER_WINS.printMessage(
