@@ -64,14 +64,21 @@ public class Game {
 
     // Get user input, loop until user gives valid input between 0 and 5 (inclusive)
     MessageCli.ASK_INPUT.printMessage();
-    String input = Utils.scanner.nextLine();
-    int fingers = Integer.parseInt(input);
 
-    while ((fingers < 0) || (fingers > 5)) {
-      MessageCli.INVALID_INPUT.printMessage();
+    int fingers = -1; // Initialise fingers to an invalid value
+    String input;
+
+    do {
       input = Utils.scanner.nextLine();
+      if (!Utils.isInteger(input)) {
+        MessageCli.INVALID_INPUT.printMessage();
+        continue;
+      }
       fingers = Integer.parseInt(input);
-    }
+      if ((fingers < 0) || (fingers > 5)) {
+        MessageCli.INVALID_INPUT.printMessage();
+      }
+    } while ((fingers < 0) || (fingers > 5));
 
     // Using the difficulty level to determine AI's fingers
     DifficultyLevel difficultyLevel =
