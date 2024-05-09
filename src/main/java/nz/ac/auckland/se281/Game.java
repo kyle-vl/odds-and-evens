@@ -16,7 +16,7 @@ public class Game {
   private int opponentLosses;
   private String name = null;
   private final String opponent = "HAL-9000";
-  private List<Integer> fingersHistory = new ArrayList<>();
+  private List<Integer> fingersHistory;
   private Choice userChoice;
   private Choice opponentChoice;
   private Difficulty currentDifficulty;
@@ -37,8 +37,10 @@ public class Game {
     opponentWins = 0;
     playerLosses = 0;
     opponentLosses = 0;
+
     name = options[0];
     currentDifficulty = difficulty;
+    fingersHistory = new ArrayList<>();
 
     userChoice = choice;
     if (userChoice == Choice.EVEN) {
