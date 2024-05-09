@@ -7,7 +7,7 @@ import nz.ac.auckland.se281.Main.Choice;
 public class MediumDifficulty implements DifficultyLevel {
   private final Strategy strategy;
 
-  /** Creates a strategy instance according to medium difficulty (explained under class JavaDoc) */
+  /** Creates a strategy instance according to medium difficulty (explained under class JavaDoc). */
   public MediumDifficulty(int gameCount, List<Integer> fingersHistory, Choice opponentChoice) {
     if (gameCount <= 3) {
       this.strategy = new RandomStrategy();
