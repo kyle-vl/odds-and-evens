@@ -17,10 +17,15 @@ public class HardDifficulty implements DifficultyLevel {
     if (gameCount <= 3
         || (opponentWins && strategy instanceof RandomStrategy)
         || (!opponentWins && strategy instanceof TopStrategy)) {
-      this.strategy = new RandomStrategy();
+      setStrategy(new RandomStrategy());
     } else {
-      this.strategy = new TopStrategy(fingersHistory, opponentChoice);
+      setStrategy(new TopStrategy(fingersHistory, opponentChoice));
     }
+  }
+
+  @Override
+  public void setStrategy(Strategy strategy) {
+    this.strategy = strategy;
   }
 
   @Override

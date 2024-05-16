@@ -1,13 +1,16 @@
 package main.java.nz.ac.auckland.se281;
 
-/**
-   * Easy difficulty always uses random strategy.
-   */ 
+/** Easy difficulty always uses random strategy. */
 public class EasyDifficulty implements DifficultyLevel {
-  private final Strategy strategy;
+  private Strategy strategy;
 
   public EasyDifficulty() {
-    this.strategy = new RandomStrategy();
+    setStrategy(new RandomStrategy());
+  }
+
+  @Override
+  public void setStrategy(Strategy strategy) {
+    this.strategy = strategy;
   }
 
   @Override
